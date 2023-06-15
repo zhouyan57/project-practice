@@ -1,14 +1,15 @@
-<script setup lang="ts">
-import {ref} from 'vue'
+<script setup lang='ts'>
 import son from './son.vue'
-const money = ref(9999)
-const pet = ref('yoyo')
-const food = ref('三文鱼')
+// 4. 通过事件接收参数
+const passv = (value: number) => {
+  console.log(value);
+  
+}
 </script>
-
 <template>
-  <h2>根组件</h2>
+  <h2>defineEmits</h2>
   <h3>父组件</h3>
-  <!-- 1. 传入数据 -->
-  <son :money="money" :pet="pet" :food="food"></son>
+  <!-- 3. 绑定事件 -->
+  <son @passv="passv"></son>
 </template>
+<style scoped></style>
