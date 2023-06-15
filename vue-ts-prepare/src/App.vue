@@ -1,18 +1,36 @@
 <script setup lang='ts'>
-import { ref } from 'vue'
-
-const target = ref<HTMLImageElement | null>(null)
-const getImg = () => {
-  // if (target.value === null) return
-  console.log(target.value?.src)
-   // 修改图片的地址
-   target.value!.src = 'https://img0.baidu.com/it/u=269752636,1324542314&fm=253&fmt=auto&app=138&f=JPEG?w=200&h=200'
-
+import axios from 'axios'
+import { onMounted, ref } from 'vue';
+// 1. axios 基本用法
+// 2. 改变为ts版本
+// 2.1 定义频道的类型
+type Channel = {
+  id: number
+  name: string
 }
+// 2.2 定义返回数据的类型
+type Res = {
+  data:{
+    channels: Channel[]
+  }
+  message: string
+}
+ 
+const list = ref<Channel[]>([]) // 默认值是空数组
+const getData = async () => {
+  const res = await axios.get<Res>('http://geek.itheima.net/v1_0/channels')
+  // data类型为Res
+  console.log(res);
+    list.value = res.data.data.channels
+  }
+onMounted(()=>{
+  getData()
+})
 </script>
 <template>
-  <h2>使用 ref 操作 dom</h2>
-  <button @click="getImg">点我得到图片</button>
-  <img ref="target" src="https://img1.baidu.com/it/u=3933233142,341745494&fm=253&fmt=auto&app=138&f=JPEG?w=130&h=170" alt="">
+  <h2>axios 配合 ts 使用</h2>
+  <ul>
+    <li v-for="item in list" :key="item.id">{{ item.name }}</li>
+  </ul>
 </template>
 <style scoped></style>
