@@ -18,4 +18,6 @@ export const useCounterStore = defineStore('counter', () => {
         count.value ++
     }
     return {count, add, doubleCount}
+},{
+    persist: true // 开启数据的持久化
 })
