@@ -1,26 +1,16 @@
 <script setup lang='ts'>
-import axios from 'axios'
-import { onMounted, ref } from 'vue';
-// 1. 渲染频道列表数据
-type Channel = {
-    id: number
-    name: string
-}
-type TRes = {
-    data:{
-        channels: Channel[]
-    },
-    message: string
-}
-const channelList = ref<Channel[]>([])
-const getData = async () => {
-    const {data: res} = await axios.get<TRes>('http://geek.itheima.net/v1_0/channels')
-    channelList.value = res.data.channels    
-}
+import { onMounted } from 'vue';
+import { useChannelStore } from '../store'
+import { storeToRefs } from 'pinia';
+// 得到 channel 的 store 实例
+const channelStore = useChannelStore()
+// 调用方法得到数据源
+const {getData} = channelStore
 onMounted(()=>{
     getData()
 })
-
+// 解构数据
+const {channelList} = storeToRefs(channelStore)
 </script>
 <template>
   <ul class="catagtory">
