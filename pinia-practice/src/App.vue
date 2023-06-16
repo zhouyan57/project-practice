@@ -2,7 +2,8 @@
 <script setup lang='ts'>
 // 1. 导入获取的 store 函数
 import { storeToRefs } from 'pinia';
-import { useCounterStore } from './store/counter';
+// import { useCounterStore } from './store/counter';
+import { useCounterStore } from './store';
 // 2. 得到store对象
 const counter = useCounterStore()
 // 3. 将 store 中的数据解构出来 (storeToRefs: 解构数据时保留响应式)
